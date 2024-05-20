@@ -3,11 +3,15 @@
   "WorkspaceRootPath": "D:\\_dev\\C#\\ImageEffects\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A4EF239B-4339-437A-AD45-3EBDE3F992CB}|ImageEffects.csproj|D:\\_dev\\C#\\ImageEffects\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A4EF239B-4339-437A-AD45-3EBDE3F992CB}|ImageEffects.csproj|d:\\_dev\\c#\\imageeffects\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A4EF239B-4339-437A-AD45-3EBDE3F992CB}|ImageEffects.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A4EF239B-4339-437A-AD45-3EBDE3F992CB}|ImageEffects.csproj|d:\\_dev\\c#\\imageeffects\\bitwiser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A4EF239B-4339-437A-AD45-3EBDE3F992CB}|ImageEffects.csproj|D:\\_dev\\C#\\ImageEffects\\downscaler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A4EF239B-4339-437A-AD45-3EBDE3F992CB}|ImageEffects.csproj|solutionrelative:downscaler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A4EF239B-4339-437A-AD45-3EBDE3F992CB}|ImageEffects.csproj|D:\\_dev\\C#\\ImageEffects\\bitwiser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A4EF239B-4339-437A-AD45-3EBDE3F992CB}|ImageEffects.csproj|solutionrelative:bitwiser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -17,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A4EF239B-4339-437A-AD45-3EBDE3F992CB}|ImageEffects.csproj|D:\\_dev\\C#\\ImageEffects\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{A4EF239B-4339-437A-AD45-3EBDE3F992CB}|ImageEffects.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A4EF239B-4339-437A-AD45-3EBDE3F992CB}|ImageEffects.csproj|D:\\_dev\\C#\\ImageEffects\\downscaler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A4EF239B-4339-437A-AD45-3EBDE3F992CB}|ImageEffects.csproj|solutionrelative:downscaler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +34,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "D:\\_dev\\C#\\ImageEffects\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
@@ -52,46 +52,46 @@
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
               "ToolTip": "D:\\_dev\\C#\\ImageEffects\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAgAAAA",
+              "ViewState": "AQIAAP4AAAAAAAAAAAAAwNgAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-25T16:05:58.684Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "Downscaler.cs",
               "DocumentMoniker": "D:\\_dev\\C#\\ImageEffects\\Downscaler.cs",
               "RelativeDocumentMoniker": "Downscaler.cs",
               "ToolTip": "D:\\_dev\\C#\\ImageEffects\\Downscaler.cs",
               "RelativeToolTip": "Downscaler.cs",
-              "ViewState": "AQIAAA8AAAAAAAAAAIA8wDEAAAAUAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-25T16:25:59.571Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "PixelSorter.cs",
               "DocumentMoniker": "D:\\_dev\\C#\\ImageEffects\\PixelSorter.cs",
               "RelativeDocumentMoniker": "PixelSorter.cs",
               "ToolTip": "D:\\_dev\\C#\\ImageEffects\\PixelSorter.cs",
               "RelativeToolTip": "PixelSorter.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAAB0AAAAJAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-28T02:02:13.381Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "BitWiser.cs",
               "DocumentMoniker": "D:\\_dev\\C#\\ImageEffects\\BitWiser.cs",
               "RelativeDocumentMoniker": "BitWiser.cs",
               "ToolTip": "D:\\_dev\\C#\\ImageEffects\\BitWiser.cs",
               "RelativeToolTip": "BitWiser.cs",
-              "ViewState": "AQIAAPkAAAAAAAAAAAAowAQBAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-19T22:59:05.717Z",
               "EditorCaption": ""

@@ -29,11 +29,12 @@ namespace ImageEffects
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        // Effector instances
         private Downscaler downscaler;
         private PixelSorter pixelSorter;
         private BitWiser bitwiser;
 
+        // Files
         private string selectedFile;
         private string saveToPath;
         private Bitmap outputImage;
@@ -44,6 +45,15 @@ namespace ImageEffects
             MapColorsToComboBox();
         }
 
+
+        #region UTILITY METHODS
+
+
+        /// <summary>
+        /// Convert a System.Drawing.Bitmap to a BitmapSource to be displayed as image source on the app.
+        /// </summary>
+        /// <param name="bitmap">The Bitmap image to convert to BitmapSource object</param>
+        /// <returns>BitmapSource</returns>
         private BitmapSource ConvertBitmap(System.Drawing.Bitmap bitmap)
         {
             var bitmapData = bitmap.LockBits(
@@ -61,6 +71,12 @@ namespace ImageEffects
             return bitmapSource;
         }
 
+        /// <summary>
+        /// Janky temporary fix for bad downscaler bitmap traversal exceeding array bounds.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="number"></param>
+        /// <returns></returns>
         private static int GetClosestFactor(int target, int number)
         {
             for (int i = 0; i < number; i++)
@@ -77,6 +93,10 @@ namespace ImageEffects
             return number;
         }
 
+        /// <summary>
+        /// Set each effector instance's image property to be the last outputted image.
+        /// </summary>
+        /// <param name="output">The last outputted image</param>
         private void UpdateEffectorsToOutputImg(Bitmap output)
         {
             this.downscaler = new Downscaler(output);
@@ -84,6 +104,10 @@ namespace ImageEffects
             this.bitwiser = new BitWiser(output);
         }
 
+        /// <summary>
+        /// Reset each effector instance to load the original image from the file path.
+        /// </summary>
+        /// <param name="filepath">Input image file path</param>
         private void ResetEffectorsToOriginal(string filepath)
         {
             this.downscaler = new Downscaler(filepath);
@@ -96,10 +120,19 @@ namespace ImageEffects
             return new Bitmap(filepath);
         }
 
+        /// <summary>
+        /// Update the image component on the app.
+        /// </summary>
+        /// <param name="image">The image to convert to a BitmapSource and then display</param>
         private void UpdateImage(Bitmap image)
         {
             ImgOutput.Source = ConvertBitmap(image);
         }
+
+
+        #endregion
+
+        #region COMPONENT EVENT HANDLERS
 
         private void BtnSelectFile_Click(object sender, RoutedEventArgs e)
         {
@@ -145,6 +178,7 @@ namespace ImageEffects
                 case "Downscale":
                     outputImage = downscaler.GridAverage(GetClosestFactor(Convert.ToInt32(TxtBoxDownscaleNum.Text), this.downscaler.inputImg.Width));
                     break;
+
                 case "Pixel Sort":
                     if (selectedSortType.ToString() == "Vertical")
                     {
@@ -155,6 +189,7 @@ namespace ImageEffects
                         outputImage = pixelSorter.SortHorizontal(GetClosestFactor(Convert.ToInt32(TxtBoxPixelSortCols.Text), this.pixelSorter.inputImg.Width));
                     }
                     break;
+
                 case "Bit Shift":
                     if (selectedShiftDirection.ToString() == "Left Shift")
                     {
@@ -165,6 +200,7 @@ namespace ImageEffects
                         outputImage = bitwiser.Shift(bits, "right");
                     }
                     break;
+
                 case "Bitwise":
                     if (selectedBitwiseOperation.ToString() == "OR")
                     {
@@ -271,5 +307,7 @@ namespace ImageEffects
             ResetEffectorsToOriginal(selectedFile);
             UpdateImage(LoadImageFromPath(selectedFile));
         }
+
+        #endregion
     }
 }

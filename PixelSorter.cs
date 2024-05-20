@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
-using System.Globalization;
 
 namespace ImageEffects
 {
@@ -34,7 +31,7 @@ namespace ImageEffects
             this.inputImg = imageBitmap;
         }
 
-        private int ColorToHSV(Color color)
+        /*private int ColorToHSV(Color color)
         {
             int max = Math.Max(color.R, Math.Max(color.G, color.B));
             int min = Math.Min(color.R, Math.Min(color.G, color.B));
@@ -44,7 +41,7 @@ namespace ImageEffects
             double value = (max / 255d);
 
             return (int)value; 
-        }
+        }*/
 
         private List<Color> SortRGB(List<Color> unsorted)
         {
@@ -93,7 +90,7 @@ namespace ImageEffects
                 {
                     if (unsorted.Count >= chunkSize)
                     {
-                        // Sort the unsorted list of 10 pixels
+                        // Sort the unsorted list of n pixels
                         sorted.AddRange(SortRGB(unsorted)); // Add the sorted unsorted list to sorted
                         unsorted.Clear(); // Clear the unsorted list and continue to add to it and repeat this
                         continue;
@@ -139,7 +136,7 @@ namespace ImageEffects
                 {
                     if (unsorted.Count >= chunkSize)
                     {
-                        // Sort the unsorted list of 10 pixels
+                        // Sort the unsorted list of n pixels
                         sorted.AddRange(SortRGB(unsorted)); // Add the sorted unsorted list to sorted
                         unsorted.Clear(); // Clear the unsorted list and continue to add to it and repeat this
                         continue;

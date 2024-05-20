@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-using System.Data.Common;
-using System.Diagnostics;
 
 namespace ImageEffects
 {
@@ -89,16 +83,13 @@ namespace ImageEffects
 
 
         /// <summary>
-        /// FAST Bitwise OR operations on all pixels. Runs about twice as fast as naive.
-        /// Credit: hashi, jcvandan on Stackoverflow
+        /// Compare each pixel to comparisonColor with bitwise OR.
+        /// Fast bitmap traversing -- credit: hashi, jcvandan on Stackoverflow
         /// </summary>
-        /// <param name="comparisonColor"></param>
-        /// <returns></returns>
+        /// <param name="comparisonColor">The color to compare each pixel to</param>
+        /// <returns>Altered color bitmap</returns>
         public Bitmap BitwiseOR_FAST(Color comparisonColor)
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
             Bitmap output = inputImg;
 
             // Lock bits
@@ -111,9 +102,6 @@ namespace ImageEffects
             // Declare arrays to hold the bytes of the bitmap
             int bytes = bmpData.Stride * output.Height;
             byte[] rgbValues = new byte[bytes];
-            byte[] r = new byte[bytes / 3];
-            byte[] g = new byte[bytes / 3];
-            byte[] b = new byte[bytes / 3];
 
             Marshal.Copy(ptr, rgbValues, 0, bytes);
 
@@ -125,29 +113,25 @@ namespace ImageEffects
             {
                 for (int row = 0; row < bmpData.Width; row++)
                 {
-                    byte _r = (byte)(rgbValues[(col * stride) + (row * 3) + 2]);
-                    byte _g = (byte)(rgbValues[(col * stride) + (row * 3) + 1]);
-                    byte _b = (byte)(rgbValues[(col * stride) + (row * 3)]);
+                    byte r = (byte)(rgbValues[(col * stride) + (row * 3) + 2]);
+                    byte g = (byte)(rgbValues[(col * stride) + (row * 3) + 1]);
+                    byte b = (byte)(rgbValues[(col * stride) + (row * 3)]);
 
-                    output.SetPixel(row, col, OR(Color.FromArgb(_r, _g, _b), comparisonColor));
+                    output.SetPixel(row, col, OR(Color.FromArgb(r, g, b), comparisonColor));
                 }
             }
 
-
-            sw.Stop();
-            TimeSpan ts = sw.Elapsed;
-            string elapsedTime = String.Format("FAST OR {0:00}:{1:00}:{2:00}.{3:00}",
-            ts.Hours, ts.Minutes, ts.Seconds,
-            ts.Milliseconds / 10);
-            Console.WriteLine("RunTime " + elapsedTime);
             return output;
         }
 
+        /// <summary>
+        /// Compare each pixel to comparisonColor with bitwise AND.
+        /// Fast bitmap traversing -- credit: hashi, jcvandan on Stackoverflow
+        /// </summary>
+        /// <param name="comparisonColor">The color to compare each pixel to</param>
+        /// <returns>Altered color bitmap</returns>
         public Bitmap BitwiseAND_FAST(Color comparisonColor)
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
             Bitmap output = inputImg;
 
             // Lock bits
@@ -160,9 +144,6 @@ namespace ImageEffects
             // Declare arrays to hold the bytes of the bitmap
             int bytes = bmpData.Stride * output.Height;
             byte[] rgbValues = new byte[bytes];
-            byte[] r = new byte[bytes / 3];
-            byte[] g = new byte[bytes / 3];
-            byte[] b = new byte[bytes / 3];
 
             Marshal.Copy(ptr, rgbValues, 0, bytes);
 
@@ -174,29 +155,26 @@ namespace ImageEffects
             {
                 for (int row = 0; row < bmpData.Width; row++)
                 {
-                    byte _r = (byte)(rgbValues[(col * stride) + (row * 3) + 2]);
-                    byte _g = (byte)(rgbValues[(col * stride) + (row * 3) + 1]);
-                    byte _b = (byte)(rgbValues[(col * stride) + (row * 3)]);
+                    byte r = (byte)(rgbValues[(col * stride) + (row * 3) + 2]);
+                    byte g = (byte)(rgbValues[(col * stride) + (row * 3) + 1]);
+                    byte b = (byte)(rgbValues[(col * stride) + (row * 3)]);
 
-                    output.SetPixel(row, col, AND(Color.FromArgb(_r, _g, _b), comparisonColor));
+                    output.SetPixel(row, col, AND(Color.FromArgb(r, g, b), comparisonColor));
                 }
             }
 
 
-            sw.Stop();
-            TimeSpan ts = sw.Elapsed;
-            string elapsedTime = String.Format("FAST AND {0:00}:{1:00}:{2:00}.{3:00}",
-            ts.Hours, ts.Minutes, ts.Seconds,
-            ts.Milliseconds / 10);
-            Console.WriteLine("RunTime " + elapsedTime);
             return output;
         }
 
+        /// <summary>
+        /// Compare each pixel to comparisonColor with bitwise XOR.
+        /// Fast bitmap traversing -- credit: hashi, jcvandan on Stackoverflow
+        /// </summary>
+        /// <param name="comparisonColor">The color to compare each pixel to</param>
+        /// <returns>Altered color bitmap</returns>
         public Bitmap BitwiseXOR_FAST(Color comparisonColor)
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
             Bitmap output = inputImg;
 
             // Lock bits
@@ -209,9 +187,6 @@ namespace ImageEffects
             // Declare arrays to hold the bytes of the bitmap
             int bytes = bmpData.Stride * output.Height;
             byte[] rgbValues = new byte[bytes];
-            byte[] r = new byte[bytes / 3];
-            byte[] g = new byte[bytes / 3];
-            byte[] b = new byte[bytes / 3];
 
             Marshal.Copy(ptr, rgbValues, 0, bytes);
 
@@ -223,30 +198,19 @@ namespace ImageEffects
             {
                 for (int row = 0; row < bmpData.Width; row++)
                 {
-                    byte _r = (byte)(rgbValues[(col * stride) + (row * 3) + 2]);
-                    byte _g = (byte)(rgbValues[(col * stride) + (row * 3) + 1]);
-                    byte _b = (byte)(rgbValues[(col * stride) + (row * 3)]);
+                    byte r = (byte)(rgbValues[(col * stride) + (row * 3) + 2]);
+                    byte g = (byte)(rgbValues[(col * stride) + (row * 3) + 1]);
+                    byte b = (byte)(rgbValues[(col * stride) + (row * 3)]);
 
-                    output.SetPixel(row, col, XOR(Color.FromArgb(_r, _g, _b), comparisonColor));
+                    output.SetPixel(row, col, XOR(Color.FromArgb(r, g, b), comparisonColor));
                 }
             }
 
-
-            sw.Stop();
-            TimeSpan ts = sw.Elapsed;
-            string elapsedTime = String.Format("FAST XOR {0:00}:{1:00}:{2:00}.{3:00}",
-            ts.Hours, ts.Minutes, ts.Seconds,
-            ts.Milliseconds / 10);
-            Console.WriteLine("RunTime " + elapsedTime);
             return output;
         }
 
         public Bitmap BitwiseOR(Color comparisonColor)
         {
-
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
             Bitmap output = inputImg;
 
             for (int i = 0; i < this.inputImg.Width; i++)
@@ -258,13 +222,6 @@ namespace ImageEffects
                     output.SetPixel(i, j, OR(pixel, comparisonColor));
                 }
             }
-
-            sw.Stop();
-            TimeSpan ts = sw.Elapsed;
-            string elapsedTime = String.Format("REGULAR OR {0:00}:{1:00}:{2:00}.{3:00}",
-            ts.Hours, ts.Minutes, ts.Seconds,
-            ts.Milliseconds / 10);
-            Console.WriteLine("RunTime " + elapsedTime);
 
             return output;
         }
@@ -303,18 +260,43 @@ namespace ImageEffects
             return output;
         }
 
+        /// <summary>
+        /// Perform bitwise shift left or right to each pixel.
+        /// </summary>
+        /// <param name="bits">How far to shift</param>
+        /// <param name="direction">Direction to shift</param>
+        /// <returns></returns>
         public Bitmap Shift(byte bits = 1, string direction = "left")
         {
 
             Bitmap output = inputImg;
 
-            for (int i = 0; i < this.inputImg.Width; i++)
-            {
-                for (int j = 0; j < this.inputImg.Height; j++)
-                {
-                    Color pixel = this.inputImg.GetPixel(i, j);
+            // Lock bits
+            Rectangle rect = new Rectangle(0, 0, output.Width, output.Height);
+            BitmapData bmpData = output.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
-                    output.SetPixel(i, j, ShiftColor(pixel, bits, direction));
+            // Get the address of the first line
+            IntPtr ptr = bmpData.Scan0;
+
+            // Declare arrays to hold the bytes of the bitmap
+            int bytes = bmpData.Stride * output.Height;
+            byte[] rgbValues = new byte[bytes];
+
+            Marshal.Copy(ptr, rgbValues, 0, bytes);
+
+            int stride = bmpData.Stride;
+
+            output.UnlockBits(bmpData);
+
+            for (int col = 0; col < bmpData.Height; col++)
+            {
+                for (int row = 0; row < bmpData.Width; row++)
+                {
+                    byte r = (byte)(rgbValues[(col * stride) + (row * 3) + 2]);
+                    byte g = (byte)(rgbValues[(col * stride) + (row * 3) + 1]);
+                    byte b = (byte)(rgbValues[(col * stride) + (row * 3)]);
+
+                    output.SetPixel(row, col, ShiftColor(Color.FromArgb(r, g, b), bits, direction));
                 }
             }
 
