@@ -20,6 +20,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Reflection;
+using Microsoft.Win32;
 
 
 namespace ImageEffects
@@ -42,7 +43,7 @@ namespace ImageEffects
         public MainWindow()
         {
             InitializeComponent();
-            MapColorsToComboBox();
+            MapColorsToComboBoxes();
         }
 
 
@@ -93,6 +94,19 @@ namespace ImageEffects
             return number;
         }
 
+
+        IEnumerable<System.Drawing.Color> GetSystemColors()
+        {
+            Type type = typeof(System.Drawing.Color);
+            return type.GetProperties().Where(info => info.PropertyType == type).Select(info => (System.Drawing.Color)info.GetValue(null, null));
+        }
+
+        private void MapColorsToComboBoxes()
+        {
+            ComboColors.ItemsSource = GetSystemColors();
+            ComboColorsVariant.ItemsSource = GetSystemColors();
+        }
+
         /// <summary>
         /// Set each effector instance's image property to be the last outputted image.
         /// </summary>
@@ -129,6 +143,34 @@ namespace ImageEffects
             ImgOutput.Source = ConvertBitmap(image);
         }
 
+        private List<Bitmap> GenerateVariants(string operation)
+        {
+            List<Bitmap> variants = new List<Bitmap>();
+
+            for (int variant = 1; variant < 65; variant++)
+            {
+                ResetEffectorsToOriginal(selectedFile);
+                if (operation == "OR")
+                {
+                    variants.Add(this.bitwiser.BitwiseOR_Variant((System.Drawing.Color)ComboColorsVariant.SelectedItem, variant));
+                }
+                else if (operation == "AND")
+                {
+                    variants.Add(this.bitwiser.BitwiseAND_Variant((System.Drawing.Color)ComboColorsVariant.SelectedItem, variant));
+                }
+                else if (operation == "XOR")
+                {
+                    variants.Add(this.bitwiser.BitwiseXOR_Variant((System.Drawing.Color)ComboColorsVariant.SelectedItem, variant));
+                }
+                else
+                {
+                    Console.WriteLine("No operation selected");
+                }
+            }
+
+            return variants;
+        }
+
 
         #endregion
 
@@ -156,6 +198,8 @@ namespace ImageEffects
                 Console.WriteLine(filename);
                 selectedFile = filename;
 
+                BtnSave.IsEnabled = true;
+
                 // Open image from path name
                 ResetEffectorsToOriginal(selectedFile);
                 UpdateImage(LoadImageFromPath(selectedFile));
@@ -169,9 +213,11 @@ namespace ImageEffects
             var selectedSortType = MainGrid.Children.OfType<RadioButton>().FirstOrDefault(r => r.IsChecked.HasValue && r.GroupName == "PixelSortType" && r.IsChecked.Value).Content;
 
             var selectedShiftDirection = MainGrid.Children.OfType<RadioButton>().FirstOrDefault(r => r.IsChecked.HasValue && r.GroupName == "ShiftDirection" && r.IsChecked.Value).Content;
-            var bits = (byte)Int16.Parse(TxtBoxBits.Text);
+            byte bits = (byte)Int16.Parse(TxtBoxBits.Text);
 
             var selectedBitwiseOperation = MainGrid.Children.OfType<RadioButton>().FirstOrDefault(r => r.IsChecked.HasValue && r.GroupName == "BitwiseOperation" && r.IsChecked.Value).Content;
+            var selectedBitwiseOperationVariant = MainGrid.Children.OfType<RadioButton>().FirstOrDefault(r => r.IsChecked.HasValue && r.GroupName == "BitwiseOperationVariant" && r.IsChecked.Value).Content;
+            int variant = (int)Int16.Parse(TxtBoxVariant.Text);
 
             switch (selectedEffect)
             {
@@ -204,19 +250,32 @@ namespace ImageEffects
                 case "Bitwise":
                     if (selectedBitwiseOperation.ToString() == "OR")
                     {
-                        outputImage = bitwiser.BitwiseOR_FAST((System.Drawing.Color)ComboColors.SelectedItem);
+                        outputImage = bitwiser.BitwiseOR((System.Drawing.Color)ComboColors.SelectedItem);
                     }
                     else if (selectedBitwiseOperation.ToString() == "AND")
                     {
-                        //outputImage = bitwiser.BitwiseAND((System.Drawing.Color)ComboColors.SelectedItem);
-                        outputImage = bitwiser.BitwiseAND_FAST((System.Drawing.Color)ComboColors.SelectedItem);
+                        outputImage = bitwiser.BitwiseAND((System.Drawing.Color)ComboColors.SelectedItem);
                     }
                     else if (selectedBitwiseOperation.ToString() == "XOR")
                     {
-                        outputImage = bitwiser.BitwiseXOR_FAST((System.Drawing.Color)ComboColors.SelectedItem);
+                        outputImage = bitwiser.BitwiseXOR((System.Drawing.Color)ComboColors.SelectedItem);
                     }
                     break;
 
+                case "Bitwise Variants":
+                    if (selectedBitwiseOperationVariant.ToString() == "OR")
+                    {
+                        outputImage = bitwiser.BitwiseOR_Variant((System.Drawing.Color)ComboColorsVariant.SelectedItem, variant);
+                    }
+                    else if (selectedBitwiseOperationVariant.ToString() == "AND")
+                    {
+                        outputImage = bitwiser.BitwiseAND_Variant((System.Drawing.Color)ComboColorsVariant.SelectedItem, variant);
+                    }
+                    else if (selectedBitwiseOperationVariant.ToString() == "XOR")
+                    {
+                        outputImage = bitwiser.BitwiseXOR_Variant((System.Drawing.Color)ComboColorsVariant.SelectedItem, variant);
+                    }
+                    break;
             }
 
             // TODO: Turn this block into a method called update effectors or something
@@ -230,7 +289,7 @@ namespace ImageEffects
         {
             Console.WriteLine("Opening Dialog");
             Stream myStream;
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            System.Windows.Forms.SaveFileDialog saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 
             saveFileDialog1.Title = "Save picture as ";
             saveFileDialog1.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
@@ -260,46 +319,79 @@ namespace ImageEffects
             Console.WriteLine("Image saved");
         }
 
+        private void BtnSaveVariants_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Opening Folder Browser Dialog");
+
+            var selectedBitwiseOperationVariant = MainGrid.Children.OfType<RadioButton>().FirstOrDefault(r => r.IsChecked.HasValue && r.GroupName == "BitwiseOperationVariant" && r.IsChecked.Value).Content;
+
+            using (var folderDialog = new FolderBrowserDialog())
+            {
+                DialogResult result = folderDialog.ShowDialog();
+                Console.WriteLine("Result");
+
+                if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
+                {
+                    string folderPath = folderDialog.SelectedPath;
+
+                    List<Bitmap> bmp = GenerateVariants((string)selectedBitwiseOperationVariant);
+
+                    // Iterate through the list of bitmaps
+                    foreach (Bitmap bitmap in bmp)
+                    {
+                        // Generate a unique filename for each bitmap (you can adjust this as needed)
+                        string fileName = $"bitmap_{DateTime.Now.Ticks}.bmp";
+                        string filePath = System.IO.Path.Combine(folderPath, fileName);
+
+                        // Save the bitmap to the selected folder
+                        bitmap.Save(filePath);
+                    }
+
+                    System.Windows.MessageBox.Show("Bitmaps saved successfully.");
+                }
+            }
+        }
+
+
         private void RadBtnHorizontal_Checked(object sender, RoutedEventArgs e) { }
 
         private void RadBtnVertical_Checked(object sender, RoutedEventArgs e) { }
 
-
-        private List<System.Drawing.Color> allColors = new List<System.Drawing.Color>();
-
-        IEnumerable<System.Drawing.Color> GetSystemColors()
-        {
-            Type type = typeof(System.Drawing.Color);
-            return type.GetProperties().Where(info => info.PropertyType == type).Select(info => (System.Drawing.Color)info.GetValue(null, null));
-        }
-
-        private void MapColorsToComboBox()
-        {
-            ComboColors.ItemsSource = GetSystemColors();
-        }
+        
 
         private void ChkBoxDownscale_Checked(object sender, RoutedEventArgs e)
         {
             BtnRun.IsEnabled = true;
             BtnReset.IsEnabled = true;
+            BtnSaveVariants.IsEnabled = false;
         }
 
         private void ChkBoxPixelSort_Checked(object sender, RoutedEventArgs e)
         {
             BtnRun.IsEnabled = true;
             BtnReset.IsEnabled = true;
+            BtnSaveVariants.IsEnabled = false;
         }
 
         private void RadBtnBitShift_Checked(object sender, RoutedEventArgs e)
         {
             BtnRun.IsEnabled = true;
             BtnReset.IsEnabled = true;
+            BtnSaveVariants.IsEnabled = false;
         }
 
         private void RadBtnBitWise_Checked(object sender, RoutedEventArgs e)
         {
             BtnRun.IsEnabled = true;
             BtnReset.IsEnabled = true;
+            BtnSaveVariants.IsEnabled = false;
+        }
+
+        private void RadBtnBitWiseVariants_Checked(object sender, RoutedEventArgs e)
+        {
+            BtnRun.IsEnabled = true;
+            BtnReset.IsEnabled = true;
+            BtnSaveVariants.IsEnabled = true;
         }
 
         private void BtnReset_Click(object sender, RoutedEventArgs e)

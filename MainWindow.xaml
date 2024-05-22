@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageEffects"
         mc:Ignorable="d"
-        Title="Image Effects" Height="450" Width="800">
-    <Grid x:Name="MainGrid">
+        Title="Image Effects" Height="607" Width="951">
+    <Grid x:Name="MainGrid" Margin="0,0,0,1">
         <Image x:Name="ImgOutput" Margin="345,12,10,11"/>
         <Button x:Name="BtnSelectFile" Content="Select Image" HorizontalAlignment="Left" Margin="8,10,0,0" VerticalAlignment="Top" Width="242" Click="BtnSelectFile_Click"/>
         <Label x:Name="LblEffects" Content="Effects:" HorizontalAlignment="Left" Margin="8,54,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="ChkBoxDownscale" GroupName="Effect" Content="Downscale" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.588,0.533" Checked="ChkBoxDownscale_Checked" IsEnabled="False"/>
-        <Button x:Name="BtnRun" Content="Apply Effects" HorizontalAlignment="Left" Margin="19,386,0,0" RenderTransformOrigin="0.5,0.5" Width="108" Click="BtnRun_Click" Height="20" VerticalAlignment="Top" IsEnabled="False">
+        <Button x:Name="BtnRun" Content="Apply Effects" HorizontalAlignment="Left" Margin="29,535,0,0" RenderTransformOrigin="0.5,0.5" Width="108" Click="BtnRun_Click" Height="20" VerticalAlignment="Top" IsEnabled="False">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -22,14 +22,14 @@
             </Button.RenderTransform>
         </Button>
         <Label x:Name="LblSelectedFile" Content="" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Width="240"/>
-        <TextBox x:Name="TxtBoxDownscaleNum" HorizontalAlignment="Left" Margin="222,79,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="28"/>
-        <Label Content="Resolution:" HorizontalAlignment="Left" Margin="154,76,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtBoxDownscaleNum" HorizontalAlignment="Left" Margin="256,78,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="28"/>
+        <Label Content="Resolution:" HorizontalAlignment="Left" Margin="188,75,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="ChkBoxPixelSort" GroupName="Effect" Content="Pixel Sort" HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.588,0.533" Checked="ChkBoxPixelSort_Checked"/>
-        <RadioButton x:Name="RadBtnVertical" Content="Vertical" GroupName="PixelSortType" HorizontalAlignment="Left" Margin="100,113,0,0" VerticalAlignment="Top" IsChecked="True" Checked="RadBtnVertical_Checked"/>
-        <RadioButton x:Name="RadBtnHorizontal" Content="Horizontal" GroupName="PixelSortType" HorizontalAlignment="Left" Margin="100,128,0,0" VerticalAlignment="Top" Checked="RadBtnHorizontal_Checked"/>
-        <Label x:Name="LblRowsOrCols" Content="Rows:"  HorizontalAlignment="Left" Margin="182,112,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="TxtBoxPixelSortCols" HorizontalAlignment="Left" Margin="222,116,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="28"/>
-        <Button x:Name="BtnSave" Content="Save Image" HorizontalAlignment="Left" Margin="140,386,0,0" RenderTransformOrigin="0.5,0.5" Width="108" Click="BtnSave_Click" IsEnabled="False" Height="20" VerticalAlignment="Top">
+        <RadioButton x:Name="RadBtnVertical" Content="Vertical" GroupName="PixelSortType" HorizontalAlignment="Left" Margin="122,112,0,0" VerticalAlignment="Top" IsChecked="True" Checked="RadBtnVertical_Checked"/>
+        <RadioButton x:Name="RadBtnHorizontal" Content="Horizontal" GroupName="PixelSortType" HorizontalAlignment="Left" Margin="122,127,0,0" VerticalAlignment="Top" Checked="RadBtnHorizontal_Checked"/>
+        <Label x:Name="LblRowsOrCols" Content="Rows:"  HorizontalAlignment="Left" Margin="216,111,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtBoxPixelSortCols" HorizontalAlignment="Left" Margin="256,115,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="28"/>
+        <Button x:Name="BtnSave" Content="Save Image" HorizontalAlignment="Left" Margin="150,535,0,0" RenderTransformOrigin="0.5,0.5" Width="108" Click="BtnSave_Click" IsEnabled="False" Height="20" VerticalAlignment="Top">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -40,16 +40,34 @@
             </Button.RenderTransform>
         </Button>
         <RadioButton x:Name="RadBtnBitShift" GroupName="Effect" Content="Bit Shift" HorizontalAlignment="Left" Margin="10,172,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.588,0.533" Checked="RadBtnBitShift_Checked"/>
-        <RadioButton x:Name="RadBtnLeft" Content="Left Shift" GroupName="ShiftDirection" HorizontalAlignment="Left" Margin="100,164,0,0" VerticalAlignment="Top" IsChecked="True" Checked="RadBtnVertical_Checked"/>
-        <RadioButton x:Name="RadBtnRight" Content="Right Shift" GroupName="ShiftDirection" HorizontalAlignment="Left" Margin="100,179,0,0" VerticalAlignment="Top" Checked="RadBtnHorizontal_Checked"/>
-        <Label x:Name="LblBits" Content="Bits:"  HorizontalAlignment="Left" Margin="187,166,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="TxtBoxBits" HorizontalAlignment="Left" Margin="222,170,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="28"/>
+        <RadioButton x:Name="RadBtnLeft" Content="Left Shift" GroupName="ShiftDirection" HorizontalAlignment="Left" Margin="122,163,0,0" VerticalAlignment="Top" IsChecked="True" Checked="RadBtnVertical_Checked"/>
+        <RadioButton x:Name="RadBtnRight" Content="Right Shift" GroupName="ShiftDirection" HorizontalAlignment="Left" Margin="122,178,0,0" VerticalAlignment="Top" Checked="RadBtnHorizontal_Checked"/>
+        <Label x:Name="LblBits" Content="Bits:"  HorizontalAlignment="Left" Margin="221,165,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtBoxBits" HorizontalAlignment="Left" Margin="256,169,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="28"/>
         <RadioButton x:Name="RadBtnBitWise" GroupName="Effect" Content="Bitwise" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.588,0.533" Checked="RadBtnBitWise_Checked"/>
-        <RadioButton x:Name="RadBtnOr" Content="OR" GroupName="BitwiseOperation" HorizontalAlignment="Left" Margin="102,217,0,0" VerticalAlignment="Top" IsChecked="True" Checked="RadBtnVertical_Checked"/>
-        <RadioButton x:Name="RadBtnAnd" Content="AND" GroupName="BitwiseOperation" HorizontalAlignment="Left" Margin="102,232,0,0" VerticalAlignment="Top" Checked="RadBtnHorizontal_Checked"/>
-        <RadioButton x:Name="RadBtnXor" Content="XOR" GroupName="BitwiseOperation" HorizontalAlignment="Left" Margin="102,247,0,0" VerticalAlignment="Top" IsChecked="True" Checked="RadBtnVertical_Checked"/>
-        <ComboBox x:Name="ComboColors" HorizontalAlignment="Left" Margin="154,234,0,0" VerticalAlignment="Top" Width="96" />
-        <Label x:Name="LblRowsOrCols_Copy" Content="Compare to..."  HorizontalAlignment="Left" Margin="154,214,0,0" VerticalAlignment="Top" Width="80"/>
-        <Button x:Name="BtnReset" Content="Reset" HorizontalAlignment="Left" Margin="19,360,0,0" Width="108" IsEnabled="False" Click="BtnReset_Click" Height="20" VerticalAlignment="Top"/>
+        <ComboBox x:Name="ComboColors" HorizontalAlignment="Left" Margin="188,242,0,0" VerticalAlignment="Top" Width="96" />
+        <Label x:Name="LblRowsOrCols_Copy" Content="Compare to..."  HorizontalAlignment="Left" Margin="204,219,0,0" VerticalAlignment="Top" Width="80"/>
+        <Button x:Name="BtnReset" Content="Reset" HorizontalAlignment="Left" Margin="29,509,0,0" Width="108" IsEnabled="False" Click="BtnReset_Click" Height="20" VerticalAlignment="Top"/>
+        <RadioButton x:Name="RadBtnBitWiseVariants" GroupName="Effect" Content="Bitwise Variants" HorizontalAlignment="Left" Margin="10,322,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.588,0.533" Checked="RadBtnBitWiseVariants_Checked" Width="101" Height="18"/>
+        <RadioButton x:Name="RadBtnOr" Content="OR" GroupName="BitwiseOperation" HorizontalAlignment="Left" Margin="122,230,0,0" VerticalAlignment="Top" IsChecked="True" Checked="RadBtnVertical_Checked"/>
+        <RadioButton x:Name="RadBtnAnd" Content="AND" GroupName="BitwiseOperation" HorizontalAlignment="Left" Margin="122,246,0,0" VerticalAlignment="Top" Checked="RadBtnHorizontal_Checked"/>
+        <RadioButton x:Name="RadBtnXor" Content="XOR" GroupName="BitwiseOperation" HorizontalAlignment="Left" Margin="122,260,0,0" VerticalAlignment="Top" IsChecked="True" Checked="RadBtnVertical_Checked"/>
+        <ComboBox x:Name="ComboColorsVariant" HorizontalAlignment="Left" Margin="188,332,0,0" VerticalAlignment="Top" Width="96" />
+        <Label x:Name="LblRowsOrCols_Copy1" Content="Compare to..."  HorizontalAlignment="Left" Margin="204,309,0,0" VerticalAlignment="Top" Width="80"/>
+        <RadioButton x:Name="RadBtnOrVariant" Content="OR" GroupName="BitwiseOperationVariant" HorizontalAlignment="Left" Margin="122,321,0,0" VerticalAlignment="Top" IsChecked="True" Checked="RadBtnVertical_Checked"/>
+        <RadioButton x:Name="RadBtnAndVariant" Content="AND" GroupName="BitwiseOperationVariant" HorizontalAlignment="Left" Margin="122,336,0,0" VerticalAlignment="Top" Checked="RadBtnHorizontal_Checked"/>
+        <RadioButton x:Name="RadBtnXorVariant" Content="XOR" GroupName="BitwiseOperationVariant" HorizontalAlignment="Left" Margin="122,351,0,0" VerticalAlignment="Top" IsChecked="True" Checked="RadBtnVertical_Checked"/>
+        <Button x:Name="BtnSaveVariants" Content="Save Variants" HorizontalAlignment="Left" Margin="150,510,0,0" RenderTransformOrigin="0.5,0.5" Width="108" Click="BtnSaveVariants_Click" Height="20" VerticalAlignment="Top" IsEnabled="False">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.535"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <Label x:Name="LblBits_Copy" Content="Variant:"  HorizontalAlignment="Left" Margin="29,338,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtBoxVariant" HorizontalAlignment="Left" Margin="78,344,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="22" RenderTransformOrigin="0.273,-0.109"/>
     </Grid>
 </Window>
